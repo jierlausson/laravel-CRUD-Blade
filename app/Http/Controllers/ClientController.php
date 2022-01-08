@@ -37,7 +37,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -59,7 +59,7 @@ class ClientController extends Controller
      */
     public function edit(client $client)
     {
-        return view('client.edit');
+        //
     }
 
     /**
