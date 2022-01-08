@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="container mx-5">@yield('content')</div>
+    @yield('content')
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="{{ asset('js/app.js') }}"></script>
