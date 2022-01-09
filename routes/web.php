@@ -21,7 +21,11 @@ Route::get('/', function () {
 Route::get('/client', [ClientController::class, 'index'])->name('client.index');
 Route::post('/client', [ClientController::class, 'store'])->name('client.store');
 Route::get('/client/create', [ClientController::class, 'create'])->name('client.create');
-Route::get('/client/edit', [ClientController::class, 'edit'])->name('client.edit');
+Route::get('/client/{client}/edit', [ClientController::class, 'edit'])->name('client.edit');
+Route::put('/client/{client}', [ClientController::class, 'update'])->name('client.update');
+Route::delete('/client/{client}', [ClientController::class, 'destroy'])->name('client.destroy');
+
+Route::resource('/site', 'App\Http\Controllers\ClientController');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

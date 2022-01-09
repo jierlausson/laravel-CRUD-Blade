@@ -37,16 +37,27 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $request->validate([
+            'name' => 'required|min:3|max:250',
+            'age' => 'required|numeric|max:120',
+            'publish_at' => 'nullable|date',
+        ]);
+
+        $client = new Client();
+        $client->name = $request->get('name');
+        $client->age = $request->get('age');
+        $client->save();
+
+        return redirect('client');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\client  $client
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(client $client)
+    public function show(Client $client)
     {
         //
     }
@@ -54,34 +65,47 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\client  $client
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit(client $client)
+    public function edit(Client $client)
     {
-        //
+        //dd($client->id);
+        $client = Client::find($client->id);
+        return view('client.edit')->with('client', $client);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\client  $client
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, client $client)
+    public function update(Request $request, Client $client)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3|max:250',
+            'age' => 'required|numeric|max:120',
+            'publish_at' => 'nullable|date',
+        ]);
+
+        $client->name = $request->get('name');
+        $client->age = $request->get('age');
+        $client->update();
+
+        return redirect('client');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\client  $client
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(client $client)
+    public function destroy(Client $client)
     {
-        //
+        $client->delete();
+        return redirect('client');
     }
 }
