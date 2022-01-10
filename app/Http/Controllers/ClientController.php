@@ -14,7 +14,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::All();
+        $clients = Client::paginate(4);
 
         return view('client.index', compact('clients'));
     }
@@ -48,7 +48,7 @@ class ClientController extends Controller
         $client->age = $request->get('age');
         $client->save();
 
-        return redirect('client');
+        return redirect(route('client.index'));
     }
 
     /**
@@ -70,9 +70,8 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //dd($client->id);
         $client = Client::find($client->id);
-        return view('client.edit')->with('client', $client);
+        return view('client.edit', compact('client'));
     }
 
     /**
@@ -86,7 +85,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3|max:250',
-            'age' => 'required|numeric|max:120',
+            'age' => 'required|numeric|max:130',
             'publish_at' => 'nullable|date',
         ]);
 
@@ -94,7 +93,7 @@ class ClientController extends Controller
         $client->age = $request->get('age');
         $client->update();
 
-        return redirect('client');
+        return redirect(route('client.index'));
     }
 
     /**
@@ -106,6 +105,6 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         $client->delete();
-        return redirect('client');
+        return redirect(route('client.index'));
     }
 }
