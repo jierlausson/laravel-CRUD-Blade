@@ -1,21 +1,22 @@
+@include('navigation-menu')
 @extends('site.app')
 @section('content')
     <div class="h-screen flex justify-center items-center w-full">
-        <form method="POST" action="/client/{{ $client->id }}">
+        <form method="POST" action="{{ route('client.update', $client->id) }}">
             @csrf
             @method('PUT')
-            <div class="bg-white px-10 py-8 rounded-xl w-screen shadow-md max-w-sm">
+            <div class="bg-white px-10 py-8 rounded-xl w-screen shadow-md max-w-xl">
                 <div class="space-y-4">
                     <h1 class="text-center text-2xl font-semibold text-gray-600">Editar Cliente</h1>
                     <div>
                         <label for="email" class="block mb-1 text-gray-600 font-semibold">Nome</label>
-                        <input type="text" name="name" value="{{ $client->name }}"
+                        <input type="text" name="name" value="{{ old('name') ? old('name') : $client->name }}"
                             class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full @error('name') is-invalid @enderror" />
                         @error('name')<div class="text-red-400">{{ $message }}</div>@enderror
                     </div>
                     <div>
                         <label for="email" class="block mb-1 text-gray-600 font-semibold">Idade</label>
-                        <input type="number" name="age" value="{{ $client->age }}"
+                        <input type="number" name="age" value="{{ old('age') ? old('age') : $client->age }}"
                             class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full @error('age') is-invalid @enderror" />
                         @error('age')<div class="text-red-400">{{ $message }}</div>@enderror
                     </div>
